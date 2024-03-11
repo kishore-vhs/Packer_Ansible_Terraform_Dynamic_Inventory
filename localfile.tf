@@ -9,5 +9,6 @@ resource "local_file" "inventory-file" {
             pvtserver03     =   aws_instance.srv-3.2.private_ip
         }
     )
+    # Below is inventory file.
     filename = "inventory_file"
 }
