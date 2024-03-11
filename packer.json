@@ -31,7 +31,8 @@
           "sudo touch /home/ansibleadmin/.ssh/authorized_keys",
           "sudo usermod -aG sudo ansibleadmin",
           "echo 'ansibleadmin ALL=(ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers",
-          "echo 'PasswordAuthentication yes' | sudo tee -a /etc/ssh/sshd_config",
+          "sudo sed -i 's/^#PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config",
+          "sudo systemctl restart sshd",
           "echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpiyHeMYrVLrRKc2pcSd9L79yJssuAuTuxYnGIfpgFlXNUOmDHAB5UkbE0zGn5wY3BfN7/0235pRA6AUBnpy81PY9bZwb9XHoMqhlAe+YRozdUCgTirXX394b3NY51BOm4FMxk9yAif9vFutDbXS34ww27OK95wr+Gnpbv4ayGGKOLWPbwDHa09BU3X9Yolwsnq3CoCL9m3wbPiX6PEFdDVmtLRN/G0SaV8DZEhttBv6vlhoeQIAm+piF0e/56QLVhG/6BwHE1o5uwZ8LF0rZKUL28SXBY5RhYN2BYtNIqiuicKX+PXa4IAXFS7FUygnPl3simCFIB+1A6coaV6lil' | sudo tee /home/ansibleadmin/.ssh/authorized_keys"
         ]
     }]
