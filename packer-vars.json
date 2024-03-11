@@ -1,10 +1,10 @@
 {
-    // Remove access key secret key if you are using role.
-    "aws_access_key": "",
-    "aws_secret_key": "",
+    // // Remove access key secret key if you are using role.
+    // "aws_access_key": "",
+    // "aws_secret_key": "",
     "region": "us-east-1",
-    "source_ami": "",
+    "source_ami": "ami-0cd59ecaf368e5ccf",
     "instance_type": "t2.micro",
-    "vpc_id": "",
-    "subnet_id": ""
+    "vpc_id": "vpc-045060aa3fa92120c",
+    "subnet_id": "subnet-04de92f531a5c0b1f"
 }
