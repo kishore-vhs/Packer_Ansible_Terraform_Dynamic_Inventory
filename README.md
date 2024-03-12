@@ -15,6 +15,7 @@ packer validate -var-file packer-vars.json packer.json
 packer build -var-file packer-vars.json packer.json
 ```
 - Copy pem file example sivamware.pem at Packer_Ansible_Terraform_Dynamic_Inventory
+- ### For the first time we have to give yes for hostkey checking, Next time automatically it is taken.
 ### Execution History
 - root@ip-10-0-4-94:~/Packer_Ansible_Terraform_Dynamic_Inventory# history
      1  ls /usr/local/bin/
