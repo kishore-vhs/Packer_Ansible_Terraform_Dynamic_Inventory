@@ -2,6 +2,7 @@
 - name: Playbook for installing Nginx on Ubuntu
   hosts: all
   gather_facts: no
+  become: yes
   tasks:
     - name: APT UPDATE
       shell: apt update
@@ -9,3 +10,33 @@
       apt: >
         name=nginx
         state=present
+    - name: Copy the Files to Ansible Nodes
+      copy: >
+        src=/tmp/dockertest1/index.html
+        dest=/var/www/html/index.nginx-debian.html
+        owner=root
+        group=root
+        mode=0644
+      notify:
+        - restart nginx
+    - name: Copy the style files to Destination folder.
+      copy: >
+        src=/tmp/dockertest1/style.css
+        dest=/var/www/html/style.css
+        owner=root
+        group=root
+        mode=0644
+      notify:
+        - restart nginx
+    - name: Copy the javascript files to  destination folder.
+      copy: >
+         src=/tmp/dockertest1/scorekeeper.js
+         dest=/var/www/html/scorekeeper.js
+         owner=root
+         group=root
+         mode=0644
+      notify:
+        - restart nginx  
+  handlers:
+    - name: restart nginx
+      command: service nginx restart
