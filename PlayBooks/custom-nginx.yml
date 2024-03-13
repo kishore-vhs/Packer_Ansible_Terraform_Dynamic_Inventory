@@ -1,0 +1,11 @@
+---
+- name: Playbook for installing Nginx on Ubuntu
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: APT UPDATE
+      shell: apt update
+    - name: Install Nginx
+      apt: >
+        name=nginx
+        state=present
