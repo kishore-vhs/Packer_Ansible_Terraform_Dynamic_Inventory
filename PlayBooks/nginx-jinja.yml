@@ -1,0 +1,50 @@
+---
+- name: Play for Configuring Nginx and Jinja
+  hosts: all
+  gather_facts: yes
+  become: yes
+  become_user: root
+  vars:
+    heading: "Hi There, Hema Siva Kishore here..."
+    date: "{{ ansible_facts['date_time']['date'] }}"
+    hostname: "{{ ansible_facts['hostname'] }}"
+    fqdn: "{{ ansible_facts['fqdn'] }}"
+    os_family: "{{ ansible_facts['distribution'] }}"
+    os_dest: "{{ ansible_facts['distribution_version'] }}"
+    ip_address: "{{ ansible_facts['eth0']['ipv4'['address']] }}"
+tasks:
+    - name: APT UPDATE
+      shell: apt update
+    
+    - name: Install Nginx Server
+      apt: >
+        name=nginx
+        state=present
+    
+    - name: Copy index templete
+      templete: >
+          src=$(pwd)/PlayBooks/jinja-templates/index.j2
+          dest=/var/www/html/index.nginx-debian.html
+          owner=root
+          group=root
+          mode=0644
+    
+    - name: Copy the style files
+      copy: >
+        src=$(pwd)/PlayBooks/jinja-templates/style.css
+        dest=/var/www/html/style.css
+        owner=root
+        group=root
+        mode=0644
+
+    - name: copy the java script
+      copy: >
+        src=$(pwd)/PlayBooks/jinja-templates/scorekeeper.js
+        dest=/var/www/html/scorekeeper.js
+        owner=root
+        group=root
+        group=root
+        mode=0644
+  
+    - name: restart nginx
+      command: service nginx restart

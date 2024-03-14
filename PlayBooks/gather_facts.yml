@@ -1,0 +1,27 @@
+---
+- name: Playbook for installing Nginx on Ubuntu
+  hosts: all
+  gather_facts: yes
+  become: yes
+  become_user: root
+  vars:
+    hostname: "{{ ansible_facts['hostname'] }}"
+    today_date: "{{ ansible_facts['date_time']['date'] }}"
+    fqdn: "{{ ansible_facts['fqdn'] }}"
+    os_family: "{{ ansible_facts['distribution'] }}"
+    os_dest: "{{ ansible_facts['distribution_version'] }}"
+  tasks:
+    - name: Check Free Memory
+      shell: free -h
+      register: free_memory
+    - name: Print free space
+      debug:
+        var: free_memory['stdout_lines']
+    - name: Ansible Facts
+      debug:
+        msg:
+        - "{{ ansible_facts['hostname'] }}"
+        - "{{ ansible_facts['date_time']['date']  }}"
+        - "{{ ansible_facts['fqdn'] }}"
+        - "{{ ansible_facts['distribution'] }}"
+        - "{{ ansible_facts['distribution_version'] }}"

@@ -79,3 +79,4 @@ packer build -var-file packer-vars.json packer.json
     59  ansible -i inventory_file all -m ping -u ansibleadmin --private-key sivamware.pem 
     60  terraform destroy --auto-approve
     61  history
+    62 ansible-playbook -i inventory_file custom-nginx-clone-node.yml --extra-vars CLOUD1="Hindustan" -u ansibleadmin --private-key sivamware.pem

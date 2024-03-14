@@ -1,0 +1,34 @@
+---
+- name: Testing Loops
+  gather_facts: yes
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: create testusers 1,2,3,4,5
+      user: >
+        name={{ item  }}
+        shell=/bin/bash
+        password='kishore'
+      with_items:
+          - debuser1
+          - debuser2
+          - debuser3
+          - debuser4
+          - debuser5
+      when:
+        ansible_os_family == "Debian"
+    - name: create testusers 6,7,8,9,10
+      user: >
+        name={{ item  }}
+        shell=/bin/bash
+        password='kishore'
+      with_items:
+          - rheluser1
+          - rheluser2
+          - rheluser3
+          - rheluser4
+          - rheluser5
+          - rheluser6
+      when:
+        ansible_os_family == "RedHat"

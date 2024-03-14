@@ -1,3 +1,5 @@
+# In this Playbook ansible copies data from ansible controler.
+# for cloning into ansible node REF: custom-nginx-clone-node.yml
 ---
 - name: Playbook for installing Nginx on Ubuntu
   hosts: all

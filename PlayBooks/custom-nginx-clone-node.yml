@@ -1,0 +1,70 @@
+---
+- name: Playbook for installing Nginx on Ubuntu
+  hosts: all
+  gather_facts: no
+  become: yes
+  become_user: root
+  #Variable Declaration
+  vars:
+    CLOUD1: "AWS"
+    CLOUD2: "Azure"
+    CLOUD3: "GCP"
+  tasks:
+    - name: APT UPDATE
+      shell: apt update
+
+    - name: Clone GIT Repo
+      shell: cd /tmp && rm -rf dockertest1 && git clone https://github.com/mavrick202/dockertest1.git
+      tags:
+        - clone
+
+    - name: Install Nginx Server
+      apt: >
+        name=nginx
+        state=present
+
+    - name: Copy the files to Index Folder
+      copy: >
+          src=/tmp/dockertest1/index.html
+          dest=/var/www/html/index.nginx-debian.html
+          remote_src=yes
+          owner=root
+          group=root
+          mode=0644
+      tags:
+        - index
+      notify:
+        - restart nginx
+
+    - name: Copy the Style files to Destination Folder.
+      copy: >
+          src=/tmp/dockertest1/style.css
+          dest=/var/www/html/style.css
+          remote_src=yes
+          owner=root
+          group=root
+          mode=0644
+      tags:
+        - style
+      notify:
+        - restart nginx
+    
+    - name: Copy the JavaScript to Destination Folder.
+      copy: >
+        src=/tmp/dockertest1/scorekeeper.js
+         dest=/var/www/html/scorekeeper.js
+         remote_src=yes
+         owner=root
+         group=root
+         mode=0644
+      tags:
+        - js
+    - name: Print Variables
+      debug:
+        msg:
+        - "{{ CLOUD1 }}"
+        - "{{ CLOUD2 }}"
+        - "{{ CLOUD3 }}"
+  handlers:
+    - name: restart nginx
+      command: service nginx restart
